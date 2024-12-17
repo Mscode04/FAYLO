@@ -1,0 +1,403 @@
+:root {
+  --neon-blue: #0ff;
+  --neon-pink: #f0f;
+  --cyber-purple: #9d4edd;
+  --dark-bg: #0a0a0a;
+  --card-bg: rgba(16, 16, 24, 0.9);
+  --grid-size: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: var(--neon-blue);
+}
+
+.main-nav {
+  background-color: var(--dark-bg);
+}
+
+#navbarNav a {
+  color: var(--neon-blue)
+}
+
+
+.main-body {
+  position: absolute;
+  top: 65px;
+  width: 100%;
+
+  /* background-color: var(--neon-pink); */
+}
+
+.graph-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+
+}
+
+
+
+.about-container {
+  background-color: var(--dark-bg);
+  color: white;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-header h1 {
+  font-size: 2.5rem;
+  color: var(--neon-blue);
+}
+
+.about-header p {
+  font-size: 1.2rem;
+  color: var(--cyber-purple);
+  margin-top: 10px;
+}
+
+.features-section {
+  margin-top: 60px;
+}
+
+.features-section h2 {
+  font-size: 2rem;
+  color: var(--neon-pink);
+  text-align: center;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: var(--grid-size);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.feature-card {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+.feature-card h3 {
+  color: var(--neon-blue);
+  font-size: 1.5rem;
+}
+
+.feature-card p {
+  color: var(--neon-pink);
+  font-size: 1.1rem;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+  .about-header h1 {
+    font-size: 2rem;
+  }
+
+  .about-header p {
+    font-size: 1rem;
+  }
+
+  .features-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .feature-card p {
+    font-size: 1rem;
+  }
+
+
+}
+
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  min-height: 100vh;
+}
+
+.contact-header h1 {
+  font-size: 36px;
+  color: var(--neon-blue);
+}
+
+.contact-header p {
+  font-size: 18px;
+  color: var(--neon-pink);
+  margin-top: 10px;
+  text-align: center;
+  width: 80%;
+}
+
+.contact-body {
+  display: grid;
+  grid-template-columns: var(--grid-size);
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 50px;
+}
+
+.contact-info,
+.contact-form {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.contact-info h3,
+.contact-form h3 {
+  color: var(--cyber-purple);
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form label {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: #fff;
+}
+
+.contact-form textarea {
+  height: 150px;
+}
+
+.contact-form .submit-btn {
+  padding: 10px 20px;
+  background-color: var(--neon-blue);
+  color: #0a0a0a;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.contact-form .submit-btn:hover {
+  background-color: var(--neon-pink);
+}
+
+@media screen and (max-width: 768px) {
+  .contact-body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .contact-header h1 {
+    font-size: 28px;
+  }
+
+  .contact-header p {
+    font-size: 16px;
+  }
+}
+
+.doc-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.doc-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.doc-header h1 {
+  color: var(--neon-blue);
+  font-size: 3rem;
+}
+
+.doc-header p {
+  font-size: 1.2rem;
+  color: var(--neon-pink);
+}
+
+/* Content Section */
+.doc-content h2,
+.doc-content h3 {
+  color: var(--cyber-purple);
+}
+
+.doc-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.doc-content ul li {
+  background-color: var(--card-bg);
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Footer */
+.doc-footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  border-top: 1px solid var(--neon-blue);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .doc-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .doc-header p {
+    font-size: 1rem;
+  }
+
+  .doc-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .doc-footer p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .doc-header h1 {
+    font-size: 2rem;
+  }
+
+  .doc-content {
+    padding: 10px;
+  }
+
+  .doc-footer p {
+    font-size: 0.8rem;
+  }
+}
+
+/* VidPage Styles */
+.vid-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  background-color: #000;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-description {
+  margin-top: 20px;
+  font-size: 18px;
+  color: var(--neon-blue);
+}
+
+/* About Page Styles */
+.about-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.about-page h1 {
+  font-size: 36px;
+  color: var(--neon-pink);
+}
+
+.about-cards {
+  display: grid;
+  grid-template-columns: var(--grid-size);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.about-card {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.about-card h2 {
+  font-size: 24px;
+  color: var(--neon-blue);
+}
+
+.about-card p {
+  font-size: 18px;
+  color: #fff;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .about-page h1 {
+    font-size: 28px;
+  }
+
+  .video-description {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-card h2 {
+    font-size: 20px;
+  }
+
+  .about-card p {
+    font-size: 16px;
+  }
+}
