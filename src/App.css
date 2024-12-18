@@ -332,25 +332,58 @@ body {
 
 /* VidPage Styles */
 .vid-page {
-  padding: 30px;
+  padding: 20px; /* Adjusted padding for better spacing on smaller devices */
   text-align: center;
 }
 
 .video-container {
   position: relative;
-  padding-bottom: 56.25%;
-  height: 100vh;
   width: 100%;
- 
+  max-width: 900px; /* Optional: limit the video size on larger screens */
+  margin: 0 auto; /* Center the video container */
+  padding-bottom: 56.25%; /* Aspect ratio 16:9 */
   height: 0;
   overflow: hidden;
-  max-width: 100%;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .video-container p {
-  font-size: 26px;
+  font-size: 18px;
   color: var(--neon-white);
+  margin-top: 15px;
+  padding: 0 10px; /* Add padding for smaller screens */
+  line-height: 1.5; /* Improve readability */
 }
+
+/* Media Query for Smaller Devices */
+@media (max-width: 768px) {
+  .video-container p {
+    font-size: 16px;
+  }
+
+  .vid-page {
+    padding: 15px; /* Reduce padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .video-container p {
+    font-size: 14px;
+  }
+
+  .vid-page {
+    padding: 10px;
+  }
+}
+
 
 /* About Page Styles */
 .about-page {
