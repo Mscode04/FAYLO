@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Chart } from "chart.js/auto"; // Import Chart.js
+import { Chart } from "chart.js/auto"; 
 import '../App.css';
 
 const Dashbordt = () => {
@@ -344,8 +344,8 @@ const Dashbordt = () => {
                                             <h4>People Not Following Back:</h4>
                                             <div className="row row-cols-1  row-cols-md-2 row-cols-lg-">
                                                 {getCurrentPageProfiles().map((username, index) => (
-                                                    <div className="col mb-4 " key={index}>
-                                                        <div className="card shadow-sm ">
+                                                    <div className="col mb-4 bgx" key={index}>
+                                                        <div className="card shadow-sm bgy">
                                                             <div className="card-body profile-card-bg">
                                                                 <div className="d-flex justify-content-between align-items-center w-100">
                                                                     {/* Profile Name */}
@@ -362,7 +362,7 @@ const Dashbordt = () => {
                                                                             rel="noopener noreferrer"
                                                                             style={{ padding: '4px' }}
                                                                         >
-                                                                            View Profile
+                                                                            View 
                                                                         </a>
                                                                     </div>
                                                                 </div>

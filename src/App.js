@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import React, { useState,  } from 'react';
+import { Routes, Route,  useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Vid from './Navlinks/Vid';
 import About from './Navlinks/About';

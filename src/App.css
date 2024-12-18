@@ -36,12 +36,12 @@ body {
 }
 
 .profile-card-bg{
-
-  
+  border-radius: 10px ;
+  background-color: #30b21a;
 }
 .btn-pro{
-  
-  background-color: var(--cyber-purple) !important;
+  border-radius: 5px !important;
+  background-color: var(--dark-bg2) !important;
   border: 1px solid #30b21a !important;
 }
 .main-nav {
@@ -54,7 +54,12 @@ body {
 #navbarNav a {
   color: var(--neon-white)
 }
-
+.bgx{
+  background-color: transparent !important;
+}
+.bgy{
+  background-color: transparent !important;
+}
 .main-body {
   position: absolute;
   top: 65px;
