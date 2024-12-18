@@ -18,16 +18,25 @@ body {
   background-attachment: fixed; /* Keeps the background fixed during scrolling */
 }
 
+.start{
+  margin-top: 10px;
+  width: 100%;
+  display:flex;
+  justify-content: center;
+}
 
-
+.start button{
+  background-color: #30b21a;
+  padding: 5px;
+  border-radius: 10px ;
+  border: 1px solid var(--neon-white);
+}
 .profile-card h4{
  color: var(--neon-white);
 }
 
 .profile-card-bg{
-  background-color: #333;
-  border-radius: 10px ;
-  border: 1px solid #30b21a;
+
   
 }
 .btn-pro{
