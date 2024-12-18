@@ -11,8 +11,8 @@ function Navbar() {
       <div className="container-fluid">
         {/* Logo and Brand */}
         <Link className="navbar-brand" to="/">
-          <img src={logo} alt="Logo" className="logo-main" style={{ height: '40px' }} />
-          <strong style={{ marginLeft: '10px', color: '#ff9a12' }}>Faylo</strong>
+          <img src={logo} alt="Logo" className="logo-main" style={{ height: '30px' }} />
+          
         </Link>
 
         {/* Toggler Button for Responsive Navbar */}

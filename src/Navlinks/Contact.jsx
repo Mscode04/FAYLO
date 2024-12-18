@@ -1,80 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { FaInstagram, FaGithub, FaLinkedin, FaWhatsapp,FaGoogle } from 'react-icons/fa'; // Import icons from react-icons
 import '../App.css'; // Import the CSS for styling
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  // Handle form input changes
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // Handle form submission (for now just log the data)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // You can later add functionality to send data to a server or email
-  };
-
   return (
     <div className="contact-container">
       <div className="contact-header">
-        <h1>Contact Us</h1>
-        <p>Have any questions? Reach out to us and we'll get back to you soon!</p>
+        <h1>Contact MsDev</h1>
+        <p>Feel free to reach out to me!</p>
       </div>
 
       <div className="contact-body">
         <div className="contact-info">
-          <h3>Contact Information</h3>
-          <p>📧 Email: example@email.com</p>
-          <p>📞 Phone: +123 456 789</p>
-          <p>📍 Location: Anywhere, Earth</p>
-        </div>
-
-        <div className="contact-form">
-          <h3>Send Us a Message</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Your name"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Your email"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Message</label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Your message"
-                required
-              ></textarea>
-            </div>
-
-            <button type="submit" className="submit-btn">Send Message</button>
-          </form>
+          <h3>Developer</h3>
+          <p><strong>Name:</strong> Mohammed Shaheen KP</p>
+          <p><strong>Email:</strong> ms.shaheenkp@gmail.com</p>
+          <p><strong>Social Media:</strong></p>
+          <div className="social-media-links">
+            <a href="https://www.instagram.com/___zcl3_" target="_blank" rel="noopener noreferrer" className="social-link">
+              <FaInstagram size={30} />
+            </a>
+            <a href="https://shaheenkp.in/" target="_blank" rel="noopener noreferrer" className="social-link">
+              <FaGoogle size={30} />
+            </a>
+            <a href="https://www.linkedin.com/in/shaheenkp/" target="_blank" rel="noopener noreferrer" className="social-link">
+              <FaLinkedin size={30} />
+            </a>
+            <a href="https://github.com/Mscode04" target="_blank" rel="noopener noreferrer" className="social-link">
+              <FaGithub size={30} />
+            </a>
+            <a href="https://wa.me/8157980307" target="_blank" rel="noopener noreferrer" className="social-link">
+              <FaWhatsapp size={30} />
+            </a>
+          </div>
         </div>
       </div>
     </div>

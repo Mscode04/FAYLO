@@ -5,6 +5,7 @@ import Vid from './Navlinks/Vid';
 import About from './Navlinks/About';
 import Doc from './Navlinks/Doc';
 import Contact from './Navlinks/Contact.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Dashbord from './components/Dashbord';
 import './App.css'
@@ -21,7 +22,6 @@ function App() {
                             <Route path="/contact" element={< Contact />} />
                             <Route path="/doc" element={< Doc />} />
                             <Route path="/" element={<Dashbord />} />
-
                         </Routes>
                     </div>
                 </div>

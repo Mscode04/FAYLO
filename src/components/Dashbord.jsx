@@ -72,7 +72,7 @@ const Dashbordt = () => {
                     labels: ["Followers", "Following", "Not Following Back", "Mutual Connections"],
                     datasets: [{
                         data: [followers, following, notFollowingBack, mutualConnections],
-                        backgroundColor: ["#4caf50", "#2196f3", "#f44336", "#ffeb3b"],
+                        backgroundColor: ["#914e75", "#2196f3", "#f44336", "#ffeb3b"],
                     }],
                 },
                 options: {
@@ -80,6 +80,9 @@ const Dashbordt = () => {
                     plugins: {
                         legend: {
                             position: "top",
+                            labels: {
+                                color: "white", // Change legend label color to white
+                            },
                         },
                     },
                 },
@@ -99,18 +102,51 @@ const Dashbordt = () => {
                         {
                             label: "Instagram Data Analysis",
                             data: [followers, following, notFollowingBack, mutualConnections],
-                            borderColor: "#ff5733",
-                            backgroundColor: "rgba(255, 87, 51, 0.2)",
+                            borderColor: "#FF4450",
+                            backgroundColor: "rgba(255, 23, 2, 0.72)",
                             fill: true,
                             tension: 0.3,
+                            // Change dataset text color to white
+                            pointBackgroundColor: "white",
+                            pointBorderColor: "white",
+                            borderWidth: 2,
                         },
                     ],
                 },
                 options: {
                     responsive: true,
                     scales: {
+                        x: {
+                            ticks: {
+                                color: "white", // Change X-axis label color to white
+                            },
+                        },
                         y: {
                             beginAtZero: true,
+                            ticks: {
+                                color: "white", // Change Y-axis label color to white
+                            },
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: "white", // Change legend label color to white
+                            },
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // Set tooltip text color to white
+                                label: function (tooltipItem) {
+                                    return ` ${tooltipItem.label}: ${tooltipItem.raw}`;
+                                },
+                                title: function () {
+                                    return ''; // Remove title in the tooltip
+                                }
+                            },
+                            titleColor: 'white', // Tooltip title color
+                            bodyColor: 'white',  // Tooltip body color
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)', // Tooltip background color
                         },
                     },
                 },
@@ -171,9 +207,6 @@ const Dashbordt = () => {
 
     return (
         <div className="div">
-            <div className="text-center mb-3 dash-head">
-                <h1 className="h-main mt-4">Faylo Analyser</h1>
-            </div>
             <div className="main-content">
                 <div className="container py-5">
                     <div className="row justify-content-center">
@@ -206,64 +239,100 @@ const Dashbordt = () => {
                                     />
                                 </div>
 
-                                {/* Analyze Button */}
-                                <button
-                                    className="btn btn-info w-100"
-                                    onClick={analyzeInstagramData}
-                                >
-                                    Analyze
-                                </button>
+                                {!analysisResult && (
+                                    <button
+                                        className="btn btn-info w-100"
+                                        onClick={analyzeInstagramData}
+                                    >
+                                        Analyze
+                                    </button>
+                                )}
                             </div>
 
                             {/* Results Section */}
                             {analysisResult && (
                                 <div id="result" className="mt-4">
-                                    <table className="table table-striped table-bordered table-hover shadow-sm">
-                                        <thead className="table-primary">
+                                    <table
+                                        className="table table-striped table-bordered table-hover"
+                                        style={{
+                                            backgroundColor: 'transparent',
+                                            color: 'white',
+                                            border: '2px solid #30b21a',
+                                        }}
+                                    >
+                                        <thead>
                                             <tr>
-                                                <th colSpan="2" className="text-center">
+                                                <th
+                                                    colSpan="2"
+                                                    className="text-center"
+                                                    style={{
+                                                        backgroundColor: '#1b1b1bd0',
+                                                        color: '#30b21a',
+                                                    }}
+                                                >
                                                     <strong>Analysis Results</strong>
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th className="w-50"><strong>Total Followers:</strong></th>
-                                                <td>{analysisResult.totalFollowers}</td>
+                                                <th className="w-50" style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
+                                                    <strong>Total Followers:</strong>
+                                                </th>
+                                                <td style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
+                                                    {analysisResult.totalFollowers}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <th><strong>Total Following:</strong></th>
-                                                <td>{analysisResult.totalFollowing}</td>
+                                                <th style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
+                                                    <strong>Total Following:</strong>
+                                                </th>
+                                                <td style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
+                                                    {analysisResult.totalFollowing}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <th><strong>Not Following Back:</strong></th>
-                                                <td>{analysisResult.notFollowingBack.length}</td>
+                                                <th style={{
+                                                    padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0'
+
+                                                }}>
+                                                    <strong>Not Following Back:</strong>
+                                                </th>
+                                                <td style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
+                                                    {analysisResult.notFollowingBack.length}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <th><strong>Mutual Connections:</strong></th>
-                                                <td>{analysisResult.mutualConnections.length}</td>
+                                                <th style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
+                                                    <strong>Mutual Connections:</strong>
+                                                </th>
+                                                <td style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
+                                                    {analysisResult.mutualConnections.length}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
 
                                     {/* Button to Show Graph */}
-                                    <button
-                                        className="btn btn-success w-100 mt-3"
-                                        onClick={handleShowGraph}
-                                    >
-                                        Show Graph
-                                    </button>
+                                    {!showGraphs && (
+                                        <button
+                                            className="btn btn-success w-100 mt-3"
+                                            onClick={handleShowGraph}
+                                        >
+                                            Show Graph
+                                        </button>
+                                    )}
 
                                     {/* Graph Section */}
                                     {showGraphs && (
-                                        <div className="mt-4 graph-main">
+                                        <div className="mt-4 graph-main row">
                                             {/* Pie Chart (Round Graph) */}
-                                            <div className="text-center">
+                                            <div className="col-12 col-md-6 text-center mb-4 mb-md-0">
                                                 <canvas ref={pieChartRef} width="300" height="300"></canvas>
                                             </div>
 
                                             {/* Line Chart (Trading View-like Graph) */}
-                                            <div className="text-center mt-4">
+                                            <div className="col-12 col-md-6 text-center">
                                                 <canvas ref={lineChartRef} width="300" height="300"></canvas>
                                             </div>
                                         </div>
@@ -271,39 +340,32 @@ const Dashbordt = () => {
 
                                     {/* Profiles of Users Not Following Back */}
                                     {analysisResult.notFollowingBack.length > 0 && (
-                                        <div className="mt-4">
+                                        <div className="mt-4 profile-card">
                                             <h4>People Not Following Back:</h4>
-                                            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-">
+                                            <div className="row row-cols-1  row-cols-md-2 row-cols-lg-">
                                                 {getCurrentPageProfiles().map((username, index) => (
-                                                    <div className="col mb-4" key={index}>
-                                                        <div className="card shadow-sm">
-                                                            <div className="card-body">
-                                                                <div className="d-flex align-items-center" >
-                                                                    {/* Profile Icon */}
-                                                                    <img
-                                                                        src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
-                                                                        alt="Instagram Icon"
-                                                                        style={{
-                                                                            width: "40px",
-                                                                            height: "40px",
-                                                                            borderRadius: "50%",
-                                                                            marginRight: '6px'
-                                                                        }}
-                                                                        className="mr-3"
-                                                                    />
+                                                    <div className="col mb-4 " key={index}>
+                                                        <div className="card shadow-sm ">
+                                                            <div className="card-body profile-card-bg">
+                                                                <div className="d-flex justify-content-between align-items-center w-100">
                                                                     {/* Profile Name */}
-                                                                    <div>
+                                                                    <div className="text-pro">
                                                                         <strong>{username}</strong>
                                                                     </div>
+
+                                                                    {/* View Profile Button */}
+                                                                    <div>
+                                                                        <a
+                                                                            href={`https://www.instagram.com/${username}`}
+                                                                            className="btn btn-pro btn-primary btn-sm mt-2"
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            style={{ padding: '4px' }}
+                                                                        >
+                                                                            View Profile
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
-                                                                <a
-                                                                    href={`https://www.instagram.com/${username}`}
-                                                                    className="btn btn-primary btn-sm mt-2 "
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                >
-                                                                    View Profile
-                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
