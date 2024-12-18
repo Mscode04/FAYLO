@@ -9,24 +9,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashbord from './components/Dashbord';
 import './App.css';
 
+// Placeholder component for FAYLO
+const FAYLO = () => <div>Welcome to FAYLO!</div>;
+
 function App() {
   const [buttonText, setButtonText] = useState("Let's Start");
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleButtonClick = () => {
-    if (buttonText === "Refresh") {
-      // Refresh the page
-      window.location.reload();
+    if (buttonText === "Reopen Website") {
+      // Open the website link
+      window.location.href = "https://mscode04.github.io/FAYLO";
     } else {
       // Navigate to the Dashboard first
       navigate('/');
-      setButtonText("Refresh"); // Change button text to 'Refresh' after navigating
+      setButtonText("Reopen Website"); // Change button text to 'Reopen Website' after navigating
     }
   };
 
-  // Only show the button on the home page ('/') or dashboard ('/dashboard')
-  const showButton = location.pathname === '/' || location.pathname === '/dashboard' ||location.pathname === '/FAYLO';
+  // Only show the button on the home page ('/'), dashboard ('/dashboard'), or '/FAYLO'
+  const showButton = location.pathname === '/' || location.pathname === '/dashboard' || location.pathname === '/FAYLO';
 
   return (
     <div className="app">
@@ -46,6 +49,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/doc" element={<Doc />} />
               <Route path="/" element={<Dashbord />} />
+              <Route path="/FAYLO" element={<FAYLO />} />
             </Routes>
           </div>
         </div>
