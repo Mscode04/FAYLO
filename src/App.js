@@ -8,10 +8,10 @@ import Contact from './Navlinks/Contact.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashbord from './components/Dashbord';
 import './App.css';
-
+import AnalysisReport from "./components/AnalysisReport";
 
 function App() {
-
+  const analysisData = JSON.parse(localStorage.getItem("analysisData"));
   return (
     <div className="app">
       <div className="nav-bar">
@@ -32,6 +32,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/doc" element={<Doc />} />
               <Route path="/" element={<Dashbord />} />
+              <Route path="/report" element={<AnalysisReport data={analysisData} />} />
             
             </Routes>
           </div>

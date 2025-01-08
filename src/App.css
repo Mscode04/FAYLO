@@ -42,6 +42,10 @@ body {
 .button-main-box{
   margin-top: 50px;
 }
+.btn-vid{
+  background-color: #30b21a !important;
+  color: #fff !important;
+}
 .btn-pro{
   border-radius: 5px !important;
   background-color: var(--dark-bg2) !important;

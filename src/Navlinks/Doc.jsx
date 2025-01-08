@@ -1,5 +1,6 @@
 import React from "react";
-import { FaDownload, FaFolder, FaArrowRight, FaUpload, FaStepForward } from "react-icons/fa";
+import { FaDownload, FaFolder, FaFileAlt, FaArrowRight, FaUpload, FaStepForward } from "react-icons/fa";
+import { Link } from "react-router-dom"; // Import Link for navigation
 import '../App.css'; // Ensure you add the required styles in this CSS file
 
 const Doc = () => {
@@ -22,7 +23,7 @@ const Doc = () => {
               In the top-right corner, click the menu button (three lines), and select "Settings".
             </p>
             <p className="text-white">
-              <strong>Click on "Your Account":</strong> In the "Account" section, click on "Privacy and Security". 
+              <strong>Click on "Your Account":</strong> In the "Account" section, click on "Privacy and Security".
               Then, click on "Download Your Information".
             </p>
             <p className="text-white">
@@ -37,13 +38,14 @@ const Doc = () => {
         <div className="col-12 col-md-6 col-lg-4">
           <div className="step-card p-4 rounded shadow bg-dark2">
             <FaStepForward className="step-icon" />
-            <h2 className="h4 text-cyber-purple">Step 2: Download and Extract the Data</h2>
+            <h2 className="h4 text-cyber-purple">Step 2: Download the Data</h2>
             <p className="text-white">
               After 24 hours, Instagram will notify you that the data is ready to be downloaded.
               <strong>Download the Zip file:</strong> Click the "Download" button and save the Zip file to your device.
             </p>
             <p className="text-white">
-              Extract the Zip file. 
+              Extract the Zip file and open the "connections" folder. Inside, you'll find two files: 
+              <strong>following_1.htm</strong> and <strong>followers.htm</strong>.
             </p>
             <FaFolder className="step-icon" />
           </div>
@@ -51,31 +53,39 @@ const Doc = () => {
 
         <div className="col-12 col-md-6 col-lg-4">
           <div className="step-card p-4 rounded shadow bg-dark2">
-            <FaUpload className="step-icon" />
-            <h2 className="h4 text-cyber-purple">Step 3: Upload the Folder to Faylo</h2>
+            <FaFileAlt className="step-icon" />
+            <h2 className="h4 text-cyber-purple">Step 3: Upload Files to Faylo</h2>
             <p className="text-white">
-              Now, go to the <a href="/" target="_blank" rel="noopener noreferrer" className="text-cyber-purple">Faylo website</a>.
-              On the homepage, you'll find the upload option.
+              Now, go to the <a href="https://mscode04.github.io/FAYLO/" target="_blank" rel="noopener noreferrer" className="text-cyber-purple">Faylo website</a>.
+              On the homepage, you'll find two upload options:
             </p>
-            <p className="text-white">
-              Upload the entire <strong>"folder that you Extract"</strong> folder. 
-              
-            </p>
+            <ul className="text-white">
+              <li>Upload the <strong>following_1.htm</strong> file.</li>
+              <li>Upload the <strong>followers.htm</strong> file.</li>
+            </ul>
             <p className="text-white">
               Once uploaded, click on the "Analyze" button, and Faylo will process your Instagram data and provide insights.
             </p>
+            <FaUpload className="step-icon" />
           </div>
+      <div className="text-center mt-5">
+        <Link to="/tutorials" className="btn btn-vid">
+          Watch Video Tutorial
+        </Link>
+      </div>
         </div>
       </div>
 
       <div className="note bg-card-gr p-4 rounded mt-4">
         <h2 className="h4 text-white">Important Notes:</h2>
         <ul className="text-white">
-          <li>Ensure the data is in the correct folder structure after extraction.</li>
+          <li>Make sure that the data is in HTML format.</li>
           <li>The process might take up to 24 hours for Instagram to prepare the data.</li>
-          <li>Upload the entire "folder" folder to Faylo for accurate analysis.</li>
+          <li>Ensure the "following_1" and "followers" files are correctly uploaded to Faylo for accurate analysis.</li>
         </ul>
       </div>
+
+      {/* Button to Video Tutorials */}
     </div>
   );
 };
