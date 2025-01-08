@@ -1,24 +1,60 @@
 import React, { useState, useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Chart } from "chart.js/auto"; 
-import '../App.css';
+import { Chart } from "chart.js/auto";
+import "../App.css";
 
 const Dashbordt = () => {
     const [followersFile, setFollowersFile] = useState(null);
     const [followingFile, setFollowingFile] = useState(null);
     const [analysisResult, setAnalysisResult] = useState(null);
-    const [showGraphs, setShowGraphs] = useState(false); // State to control graph visibility
-    const [currentPage, setCurrentPage] = useState(1); // Pagination state
-    const [profilesPerPage] = useState(10); // Number of profiles to display per page
+    const [showGraphs, setShowGraphs] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [profilesPerPage] = useState(10);
 
-    // Refs for the canvas elements
+    // Refs for the charts
     const pieChartRef = useRef(null);
     const lineChartRef = useRef(null);
 
-    // Function to extract usernames from the uploaded file
-    const extractUsernamesFromFile = (file, callback) => {
+    // Handle folder upload
+    const handleFolderUpload = (event) => {
+        const files = Array.from(event.target.files);
+        if (files.length === 0) {
+            alert("Please upload a valid folder containing the required files.");
+            return;
+        }
+
+        let followersFile = null;
+        let followingFile = null;
+
+        // Identify required files by name
+        files.forEach((file) => {
+            if (file.name.includes("followers_1.html")) {
+                followersFile = file;
+            } else if (file.name.includes("following.html")) {
+                followingFile = file;
+            }
+        });
+
+        if (!followersFile || !followingFile) {
+            alert("Required files not found in the uploaded folder.");
+            return;
+        }
+
+        setFollowersFile(followersFile);
+        setFollowingFile(followingFile);
+        alert("Files uploaded successfully. You can now analyze the data.");
+    };
+
+// Analyze Instagram data
+const analyzeInstagramData = () => {
+    if (!followersFile || !followingFile) {
+        alert("Please upload a valid folder first.");
+        return;
+    }
+
+    const extractData = (file, callback) => {
         const reader = new FileReader();
-        reader.onload = function (event) {
+        reader.onload = (event) => {
             const content = event.target.result;
             const regex = /instagram\.com\/([a-zA-Z0-9._-]+)/g;
             let match;
@@ -28,41 +64,41 @@ const Dashbordt = () => {
             }
             callback(usernames);
         };
-        reader.onerror = function () {
+        reader.onerror = () => {
             alert("Error reading file. Please try again.");
         };
         reader.readAsText(file);
     };
 
-    // Function to analyze the data
-    const analyzeInstagramData = () => {
-        if (!followersFile || !followingFile) {
-            alert("Please upload both Followers and Following files.");
-            return;
-        }
+    extractData(followersFile, (followers) => {
+        extractData(followingFile, (following) => {
+            const notFollowingBack = following.filter(
+                (user) => !followers.includes(user)
+            );
+            const mutualConnections = following.filter((user) =>
+                followers.includes(user)
+            );
 
-        extractUsernamesFromFile(followersFile, (followers) => {
-            extractUsernamesFromFile(followingFile, (following) => {
-                const notFollowingBack = following.filter(
-                    (user) => !followers.includes(user)
-                );
-                const mutualConnections = following.filter((user) =>
-                    followers.includes(user)
-                );
+            const analysis = {
+                totalFollowers: followers.length,
+                totalFollowing: following.length,
+                notFollowingBack,
+                mutualConnections,
+            };
 
-                const analysis = {
-                    totalFollowers: followers.length,
-                    totalFollowing: following.length,
-                    notFollowingBack,
-                    mutualConnections,
-                };
+            // Save the analysis result to state
+            setAnalysisResult(analysis);
 
-                setAnalysisResult(analysis);
-            });
+            // Save the analysis result to localStorage
+            localStorage.setItem("instagramAnalysis", JSON.stringify(analysis));
+
+            alert("Analysis completed and saved locally!");
         });
-    };
+    });
+};
 
-    // Function to display the round graph (pie chart)
+
+    // Display pie chart
     const displayPieGraph = (followers, following, notFollowingBack, mutualConnections) => {
         const ctx = pieChartRef.current?.getContext("2d");
         if (ctx) {
@@ -81,7 +117,7 @@ const Dashbordt = () => {
                         legend: {
                             position: "top",
                             labels: {
-                                color: "white", // Change legend label color to white
+                                color: "white",
                             },
                         },
                     },
@@ -90,7 +126,7 @@ const Dashbordt = () => {
         }
     };
 
-    // Function to display the trading view-like graph (line chart)
+    // Display line chart
     const displayLineGraph = (followers, following, notFollowingBack, mutualConnections) => {
         const ctx = lineChartRef.current?.getContext("2d");
         if (ctx) {
@@ -106,7 +142,6 @@ const Dashbordt = () => {
                             backgroundColor: "rgba(255, 23, 2, 0.72)",
                             fill: true,
                             tension: 0.3,
-                            // Change dataset text color to white
                             pointBackgroundColor: "white",
                             pointBorderColor: "white",
                             borderWidth: 2,
@@ -116,37 +151,19 @@ const Dashbordt = () => {
                 options: {
                     responsive: true,
                     scales: {
-                        x: {
-                            ticks: {
-                                color: "white", // Change X-axis label color to white
-                            },
-                        },
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: "white", // Change Y-axis label color to white
-                            },
-                        },
+                        x: { ticks: { color: "white" } },
+                        y: { beginAtZero: true, ticks: { color: "white" } },
                     },
                     plugins: {
-                        legend: {
-                            labels: {
-                                color: "white", // Change legend label color to white
-                            },
-                        },
+                        legend: { labels: { color: "white" } },
                         tooltip: {
                             callbacks: {
-                                // Set tooltip text color to white
-                                label: function (tooltipItem) {
-                                    return ` ${tooltipItem.label}: ${tooltipItem.raw}`;
-                                },
-                                title: function () {
-                                    return ''; // Remove title in the tooltip
-                                }
+                                label: (tooltipItem) => ` ${tooltipItem.label}: ${tooltipItem.raw}`,
+                                title: () => '',
                             },
-                            titleColor: 'white', // Tooltip title color
-                            bodyColor: 'white',  // Tooltip body color
-                            backgroundColor: 'rgba(0, 0, 0, 0.7)', // Tooltip background color
+                            titleColor: "white",
+                            bodyColor: "white",
+                            backgroundColor: "rgba(0, 0, 0, 0.7)",
                         },
                     },
                 },
@@ -154,7 +171,7 @@ const Dashbordt = () => {
         }
     };
 
-    // Handle "Show Graph" button click
+    // Handle "Show Graph" button
     const handleShowGraph = () => {
         if (analysisResult) {
             const { totalFollowers, totalFollowing, notFollowingBack, mutualConnections } = analysisResult;
@@ -164,7 +181,7 @@ const Dashbordt = () => {
         setShowGraphs(true);
     };
 
-    // Pagination: Get profiles for the current page
+    // Get profiles for the current page
     const getCurrentPageProfiles = () => {
         if (analysisResult && analysisResult.notFollowingBack) {
             const { notFollowingBack } = analysisResult;
@@ -175,27 +192,11 @@ const Dashbordt = () => {
         return [];
     };
 
-    // Change page handler
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    // Handle previous page
-    const handlePrevPage = () => setCurrentPage(currentPage - 1);
-
-    // Handle next page
-    const handleNextPage = () => setCurrentPage(currentPage + 1);
-
-    // Get total number of pages
+    // Pagination controls
     const totalPages = Math.ceil(analysisResult?.notFollowingBack.length / profilesPerPage);
-
-    // Get the page numbers to show in pagination (only 3 page buttons)
-    const getPageNumbers = () => {
-        const pageNumbers = [];
-        const maxPages = Math.min(3, totalPages);
-        for (let i = 1; i <= maxPages; i++) {
-            pageNumbers.push(i);
-        }
-        return pageNumbers;
-    };
+    const handlePrevPage = () => setCurrentPage(currentPage - 1);
+    const handleNextPage = () => setCurrentPage(currentPage + 1);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     useEffect(() => {
         if (showGraphs && analysisResult) {
@@ -206,143 +207,51 @@ const Dashbordt = () => {
     }, [showGraphs, analysisResult]);
 
     return (
-        <div className="div">
+        <div className="div">    
             <div className="main-content">
                 <div className="container py-5">
                     <div className="row justify-content-center">
                         <div className="col-md-8 box-two">
-                            {/* File Upload Inputs */}
                             <div className="head-box">
-                                <div className="mb-3">
-                                    <label htmlFor="fileInput1" className="form-label">
-                                        Upload Followers File
-                                    </label>
-                                    <input
-                                        type="file"
-                                        id="fileInput1"
-                                        className="form-control"
-                                        accept=".html"
-                                        onChange={(e) => setFollowersFile(e.target.files[0])}
-                                    />
-                                </div>
-
-                                <div className="mb-3">
-                                    <label htmlFor="fileInput2" className="form-label">
-                                        Upload Following File
-                                    </label>
-                                    <input
-                                        type="file"
-                                        id="fileInput2"
-                                        className="form-control"
-                                        accept=".html"
-                                        onChange={(e) => setFollowingFile(e.target.files[0])}
-                                    />
-                                </div>
-
-                                {!analysisResult && (
-                                    <button
-                                        className="btn btn-info w-100"
-                                        onClick={analyzeInstagramData}
-                                    >
-                                        Analyze
-                                    </button>
-                                )}
+                                <label htmlFor="folderUpload" className="form-label">Upload Folder</label>
+                                <input
+                                    type="file"
+                                    id="folderUpload"
+                                    className="form-control"
+                                    webkitdirectory="true"
+                                    directory="true"
+                                    multiple
+                                    onChange={handleFolderUpload}
+                                />
+                                <button className="btn btn-info w-100 mt-3" onClick={analyzeInstagramData}>
+                                    Analyze
+                                </button>
                             </div>
-
-                            {/* Results Section */}
                             {analysisResult && (
                                 <div id="result" className="mt-4">
-                                    <table
-                                        className="table table-striped table-bordered table-hover"
-                                        style={{
-                                            backgroundColor: 'transparent',
-                                            color: 'white',
-                                            border: '2px solid #30b21a',
-                                        }}
-                                    >
-                                        <thead>
-                                            <tr>
-                                                <th
-                                                    colSpan="2"
-                                                    className="text-center"
-                                                    style={{
-                                                        backgroundColor: '#1b1b1bd0',
-                                                        color: '#30b21a',
-                                                    }}
-                                                >
-                                                    <strong>Analysis Results</strong>
-                                                </th>
-                                            </tr>
-                                        </thead>
+                                    <table className="table table-striped table-bordered">
                                         <tbody>
-                                            <tr>
-                                                <th className="w-50" style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
-                                                    <strong>Total Followers:</strong>
-                                                </th>
-                                                <td style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
-                                                    {analysisResult.totalFollowers}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
-                                                    <strong>Total Following:</strong>
-                                                </th>
-                                                <td style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
-                                                    {analysisResult.totalFollowing}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th style={{
-                                                    padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0'
-
-                                                }}>
-                                                    <strong>Not Following Back:</strong>
-                                                </th>
-                                                <td style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
-                                                    {analysisResult.notFollowingBack.length}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
-                                                    <strong>Mutual Connections:</strong>
-                                                </th>
-                                                <td style={{ padding: '10px', color: 'white', backgroundColor: '#1b1b1bd0' }}>
-                                                    {analysisResult.mutualConnections.length}
-                                                </td>
-                                            </tr>
+                                            <tr><th>Total Followers</th><td>{analysisResult.totalFollowers}</td></tr>
+                                            <tr><th>Total Following</th><td>{analysisResult.totalFollowing}</td></tr>
+                                            <tr><th>Not Following Back</th><td>{analysisResult.notFollowingBack.length}</td></tr>
+                                            <tr><th>Mutual Connections</th><td>{analysisResult.mutualConnections.length}</td></tr>
                                         </tbody>
                                     </table>
-
-                                    {/* Button to Show Graph */}
                                     {!showGraphs && (
-                                        <button
-                                            className="btn btn-success w-100 mt-3"
-                                            onClick={handleShowGraph}
-                                        >
+                                        <button className="btn btn-success w-100 mt-3" onClick={handleShowGraph}>
                                             Show Graph
                                         </button>
                                     )}
-
-                                    {/* Graph Section */}
                                     {showGraphs && (
-                                        <div className="mt-4 graph-main row">
-                                            {/* Pie Chart (Round Graph) */}
-                                            <div className="col-12 col-md-6 text-center mb-4 mb-md-0">
-                                                <canvas ref={pieChartRef} width="300" height="300"></canvas>
-                                            </div>
-
-                                            {/* Line Chart (Trading View-like Graph) */}
-                                            <div className="col-12 col-md-6 text-center">
-                                                <canvas ref={lineChartRef} width="300" height="300"></canvas>
-                                            </div>
+                                        <div className="mt-4 row">
+                                            <div className="col-md-6"><canvas ref={pieChartRef}></canvas></div>
+                                            <div className="col-md-6"><canvas ref={lineChartRef}></canvas></div>
                                         </div>
                                     )}
-
-                                    {/* Profiles of Users Not Following Back */}
                                     {analysisResult.notFollowingBack.length > 0 && (
                                         <div className="mt-4 profile-card">
                                             <h4>People Not Following Back:</h4>
-                                            <div className="row row-cols-1  row-cols-md-2 row-cols-lg-">
+                                            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3">
                                                 {getCurrentPageProfiles().map((username, index) => (
                                                     <div className="col mb-4 bgx" key={index}>
                                                         <div className="card shadow-sm bgy">
@@ -352,7 +261,6 @@ const Dashbordt = () => {
                                                                     <div className="text-pro">
                                                                         <strong>{username}</strong>
                                                                     </div>
-
                                                                     {/* View Profile Button */}
                                                                     <div>
                                                                         <a
@@ -360,9 +268,9 @@ const Dashbordt = () => {
                                                                             className="btn btn-pro btn-primary btn-sm mt-2"
                                                                             target="_blank"
                                                                             rel="noopener noreferrer"
-                                                                            style={{ padding: '4px' }}
+                                                                            style={{ padding: "4px" }}
                                                                         >
-                                                                            View 
+                                                                            View
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -371,7 +279,6 @@ const Dashbordt = () => {
                                                     </div>
                                                 ))}
                                             </div>
-
                                             {/* Pagination Controls */}
                                             <div className="d-flex justify-content-center mt-4">
                                                 {currentPage > 1 && (
@@ -382,7 +289,7 @@ const Dashbordt = () => {
                                                         Previous
                                                     </button>
                                                 )}
-                                                {getPageNumbers().map((page) => (
+                                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                                     <button
                                                         key={page}
                                                         className={`btn btn-secondary mx-2 ${currentPage === page ? "active" : ""}`}

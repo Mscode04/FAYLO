@@ -39,6 +39,9 @@ body {
   border-radius: 10px ;
   background-color: #30b21a;
 }
+.button-main-box{
+  margin-top: 50px;
+}
 .btn-pro{
   border-radius: 5px !important;
   background-color: var(--dark-bg2) !important;

@@ -22,7 +22,7 @@ function App() {
               <div className="container start">
                 
                 <Link className="nav-link" to="/">
-                <button >Lets Start</button>
+                <button className='button-main-box'>Lets Start</button>
                               </Link>
               </div>
             
